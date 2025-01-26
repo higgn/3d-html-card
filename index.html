@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Advanced Interactive Effects with New Background GIF</title>
+    <style>
+        /* Basic Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: url('https://i.postimg.cc/RZ9QdjFv/3Vsi.gif') no-repeat center center fixed;
+            background-size: cover;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+            perspective: 1000px;  /* 3D effect ke liye perspective add karo */
+        }
+
+        /* 3D Card Styling */
+        .card {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            overflow: hidden;
+            width: 300px;
+            text-align: center;
+            position: relative;
+            transform-style: preserve-3d;  /* 3D effect ke liye */
+            transition: transform 0.5s ease, box-shadow 0.5s ease;
+        }
+
+        .card:hover {
+            transform: rotateY(10deg) rotateX(10deg) scale(1.1);  /* 3D rotation */
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8);
+        }
+
+        .card img {
+            width: 100%;
+            display: block;
+            border-top-left-radius: 20px;
+            border-top-right-radius: 20px;
+            transition: transform 0.5s ease;
+        }
+
+        .card:hover img {
+            transform: scale(1.2);
+        }
+
+        .card-content {
+            padding: 20px;
+            transform: translateZ(20px);  /* 3D effect ke liye content ko aage le aao */
+        }
+
+        .card-content h2 {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+            color: #fff;
+        }
+
+        .card-content p {
+            font-size: 1rem;
+            color: #ccc;
+        }
+
+        /* Slider Styling */
+        .slider-container {
+            position: absolute;
+            bottom: 20px;
+            width: 80%;
+            text-align: center;
+        }
+
+        .slider {
+            width: 100%;
+        }
+
+        /* Moving Animation */
+        @keyframes moveImage {
+            0% {
+                transform: translateX(0);
+            }
+            50% {
+                transform: translateX(20px);
+            }
+            100% {
+                transform: translateX(0);
+            }
+        }
+
+        .moving-image {
+            animation: moveImage 3s infinite;
+        }
+
+        /* Mouse Hover Effects */
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0));
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+
+        .card:hover::before {
+            opacity: 1;
+        }
+
+        .card::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0));
+            transform: translate(-50%, -50%) scale(0);
+            transition: transform 0.5s ease;
+        }
+
+        .card:hover::after {
+            transform: translate(-50%, -50%) scale(1);
+        }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <img src="https://64.media.tumblr.com/86a9b50f75b4f7e1f7bacb1750eb1334/tumblr_nx3uvddl8J1rc3z3ro2_1280.gif" alt="Moving GIF" class="moving-image">
+        <div class="card-content">
+            <h2>3D GIF Effect</h2>
+            <p>Ye GIF move karti hui lagegi aur 3D card mein display hogi.</p>
+        </div>
+    </div>
+
+    <div class="slider-container">
+        <input type="range" min="1" max="100" value="50" class="slider" id="slider">
+    </div>
+
+    <script>
+        // JavaScript for Slider
+        const slider = document.getElementById('slider');
+        const card = document.querySelector('.card');
+
+        slider.addEventListener('input', () => {
+            const value = slider.value;
+            card.style.transform = `rotateY(${value - 50}deg) rotateX(${value - 50}deg) scale(${value / 50})`;  // 3D rotation aur scale
+        });
+    </script>
+</body>
+</html>
